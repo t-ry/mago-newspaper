@@ -9,5 +9,6 @@ coverage/
 __pycache__/
 .DS_Store
 .cache/
+.tools/
 test-results/
 *.log

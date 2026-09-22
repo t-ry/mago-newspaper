@@ -15,6 +15,8 @@
     "verify:orcarouter": "node --env-file=.env scripts/verify-orcarouter.mjs",
     "verify:public": "node scripts/verify-public.mjs",
     "publish:qiita": "node --env-file=.env scripts/publish-qiita.mjs",
+    "setup:aws-cli": "bash scripts/setup-aws-cli.sh",
+    "login:aws": "bash scripts/login-aws.sh",
     "deploy:aws": "bash scripts/deploy-aws.sh",
     "pause:aws": "bash scripts/pause-aws.sh",
     "resume:aws": "bash scripts/resume-aws.sh"

@@ -70,6 +70,13 @@ npm run deploy:aws
 
 スクリプトはPATH上の`aws`または開発時に一時配置した`/tmp/mago-aws-bin/aws`を自動検出します。それ以外の場所にAWS CLIがある場合は、`AWS_CLI=/path/to/aws npm run deploy:aws`のように指定します。
 
+AWS CLIが未インストールなら、Linux x86_64では次の2コマンドでプロジェクト内へAWS CLI v2を用意し、リモートログインできます。
+
+```bash
+npm run setup:aws-cli
+npm run login:aws
+```
+
 現在のデータ保存先はApp Runnerのメモリなので、MVPではインスタンス数を1に制限しています。再起動時には作成中の新聞が消れるため、継続運用ではAmazon S3 / DynamoDBなどへの移行が必要です。AWSリソースと停止手順は[docs/aws-deployment.md](docs/aws-deployment.md)に記載しています。
 
 ### データと現在の制約

@@ -18,6 +18,13 @@ App Runnerは最大1インスタンスに制限している。これにより現
 
 AWS CLI 2.32以降で`aws login --remote --region ap-northeast-1 --profile mago`を実行した後に更新する。
 
+AWS CLIがないLinux x86_64環境では、プロジェクト内へCLI v2をセットアップしてログインできる。
+
+```bash
+npm run setup:aws-cli
+npm run login:aws
+```
+
 ```bash
 AWS_CLI=/path/to/aws npm run deploy:aws
 ```
