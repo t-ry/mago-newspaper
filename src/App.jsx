@@ -5,7 +5,6 @@ import {
   ArrowUpRight,
   ArrowRight,
   Sparkles,
-  ImagePlus,
   X,
   Check,
   Download,
@@ -18,6 +17,7 @@ import {
   ShieldCheck,
   RefreshCw,
   Images,
+  Camera,
 } from "lucide-react";
 import { newspaperHtml } from "../shared/newspaper.js";
 import fontRegular from "@fontsource/noto-serif-jp/400.css?inline";
@@ -97,6 +97,7 @@ export default function App() {
     address: "",
   });
   const inputRef = useRef(null),
+    cameraRef = useRef(null),
     workRef = useRef(null);
   const approved = paper && paper.approvedRevision === paper.revision;
   useEffect(() => {
@@ -122,6 +123,7 @@ export default function App() {
     }
   }
   async function addFiles(files) {
+    if (!files?.length) return;
     await run("写真を読み込んでいます", async () => {
       const list = Array.from(files);
       if (photos.length + list.length > 12)
@@ -138,6 +140,7 @@ export default function App() {
       setPhotos((previous) => [...previous, ...added]);
     });
     if (inputRef.current) inputRef.current.value = "";
+    if (cameraRef.current) cameraRef.current.value = "";
   }
   async function generate(mode) {
     await run(
@@ -176,6 +179,7 @@ export default function App() {
     setDraft(null);
     setPhotos([]);
     setError("");
+    setToast("");
     setEditing(false);
     setDelivery(false);
     setConfirmed(false);
@@ -408,41 +412,60 @@ export default function App() {
                             </button>
                           </div>
                         ))}
-                        {photos.length < 12 && (
-                          <button
-                            className="add-tile"
-                            onClick={() => inputRef.current.click()}
-                            disabled={!!busy}
-                          >
-                            <Plus size={24} />
-                            追加する
-                          </button>
-                        )}
                       </div>
                     ) : (
                       <>
                         <span className="upload-illustration">
-                          <ImagePlus size={38} strokeWidth={1.2} />
+                          <Camera size={38} strokeWidth={1.2} />
                           <span>+</span>
                         </span>
-                        <h3>写真をここにドロップ</h3>
-                        <p>または、スマートフォン・パソコンから</p>
-                        <button
-                          className="button secondary"
-                          disabled={!!busy}
-                          onClick={() => inputRef.current.click()}
-                        >
-                          <Plus size={16} />
-                          写真を選ぶ
-                        </button>
+                        <h3>いまを、そのまま新聞に。</h3>
+                        <p>撮った写真は、この画面へすぐ取り込まれます。</p>
                       </>
                     )}
-                    <small>JPEG・PNG・WebP ／ 最大12枚 ／ 1枚10MBまで</small>
+                    {photos.length < 12 && (
+                      <div
+                        className={`capture-actions ${photos.length ? "compact" : ""}`}
+                      >
+                        <button
+                          type="button"
+                          className="button primary camera-action"
+                          disabled={!!busy}
+                          onClick={() => cameraRef.current?.click()}
+                        >
+                          <Camera size={18} />
+                          カメラで撮る
+                        </button>
+                        <button
+                          type="button"
+                          className="button secondary"
+                          disabled={!!busy}
+                          onClick={() => inputRef.current?.click()}
+                        >
+                          <Images size={17} />
+                          端末から選ぶ
+                        </button>
+                      </div>
+                    )}
+                    <small>
+                      撮影・選択した写真は位置情報を除いてJPEG化 ／ 最大12枚 ／
+                      1枚10MBまで
+                    </small>
+                    <input
+                      ref={cameraRef}
+                      type="file"
+                      accept="image/*"
+                      capture="environment"
+                      aria-label="カメラで撮影した写真を取り込む"
+                      hidden
+                      onChange={(e) => addFiles(e.target.files)}
+                    />
                     <input
                       ref={inputRef}
                       type="file"
                       accept="image/jpeg,image/png,image/webp"
                       multiple
+                      aria-label="端末から既存の写真を選ぶ"
                       hidden
                       onChange={(e) => addFiles(e.target.files)}
                     />

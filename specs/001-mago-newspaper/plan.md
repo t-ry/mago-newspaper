@@ -12,7 +12,7 @@ React + Viteの画面とNode.js/Express APIを同じプロジェクトに置く�
 - Express、Zod、Playwright、自己ホスト日本語フォント（Noto Serif JP）
 - 保存: セッション別のメモリ。2時間で失効、上限あり。CookieはHttpOnly/SameSite。
 - AI: `https://api.orcarouter.ai/v1/chat/completions`、初期モデル`openai/gpt-4o-mini`、環境変数で差し替え。
-- 画像: ブラウザで最大1600pxに縮小してJPEG再エンコード、位置情報等を持ち込まない。
+- 画像: モバイルの`capture="environment"`付きファイル入力で標準カメラを開く。撮影・既存写真ともブラウザで最大1600pxに縮小してJPEG再エンコードし、位置情報等を持ち込まない。
 - PDF: 印刷用HTMLをChromiumでA4出力。日本語フォントを埋め込み、外部リソースを禁止。
 - テスト: Node test runnerでAPI・状態遷移・AI応答検証、Playwrightでデモ操作とPDF生成。
 - 提出: README、Qiita Markdown原稿、公開手順、検証記録。

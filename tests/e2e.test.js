@@ -8,7 +8,7 @@ process.env.PLAYWRIGHT_BROWSERS_PATH ||= path.resolve(".cache/ms-playwright");
 const { chromium } = await import("playwright");
 
 test(
-  "サンプル→編集→承認→A4 PDF→模擬注文、モバイル表示",
+  "カメラ写真取込→サンプル→編集→承認→A4 PDF→模擬注文、モバイル表示",
   { timeout: 120000 },
   async () => {
     await mkdir("test-results", { recursive: true });
@@ -21,6 +21,19 @@ test(
       page.on("pageerror", (error) => errors.push(error.message));
       await page.goto(process.env.TEST_BASE_URL || "http://127.0.0.1:3000");
       await page.getByRole("button", { name: "サンプルで体験する" }).waitFor();
+      const cameraInput = page.getByLabel("カメラで撮影した写真を取り込む");
+      assert.equal(await cameraInput.getAttribute("capture"), "environment");
+      assert.equal(await cameraInput.getAttribute("accept"), "image/*");
+      assert.equal(await cameraInput.getAttribute("multiple"), null);
+      await cameraInput.setInputFiles({
+        name: "camera-photo.png",
+        mimeType: "image/png",
+        buffer: Buffer.from(
+          "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a9WQAAAAASUVORK5CYII=",
+          "base64",
+        ),
+      });
+      await page.getByAltText("追加した写真 1").waitFor();
       await page.evaluate(() => document.fonts.ready);
       await page.screenshot({
         path: "test-results/home-desktop.png",
@@ -90,6 +103,10 @@ test(
         path: "test-results/home-mobile.png",
         fullPage: true,
       });
+      assert.equal(
+        await page.getByRole("button", { name: "カメラで撮る" }).isVisible(),
+        true,
+      );
       assert.ok(
         await page.evaluate(
           () => document.documentElement.scrollWidth <= innerWidth,

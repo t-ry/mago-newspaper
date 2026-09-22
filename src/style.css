@@ -430,6 +430,22 @@ main {
   margin-top: 18px;
   letter-spacing: 0.3px;
 }
+.capture-actions {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 9px;
+  width: min(100%, 360px);
+  margin: 0 auto;
+}
+.capture-actions.compact {
+  margin-top: 14px;
+}
+.capture-actions .button {
+  width: 100%;
+}
+.camera-action {
+  box-shadow: 0 7px 18px rgba(70, 92, 52, 0.16);
+}
 .button {
   display: inline-flex;
   align-items: center;
@@ -730,19 +746,6 @@ textarea {
   border-radius: 50%;
   padding: 4px;
   color: #49563e;
-}
-.add-tile {
-  border: 1px dashed #cad2bc;
-  border-radius: 5px;
-  background: #edf0e2;
-  color: #7b8d64;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  flex-direction: column;
-  font-size: 9px;
-  aspect-ratio: 1;
 }
 .dropzone.has-photos {
   min-height: 0;
@@ -1271,6 +1274,13 @@ textarea {
   }
   .dropzone {
     min-height: 250px;
+  }
+  .capture-actions {
+    grid-template-columns: 1fr;
+  }
+  .camera-action {
+    min-height: 52px;
+    font-size: 13px;
   }
   .privacy-note {
     font-size: 8px;
