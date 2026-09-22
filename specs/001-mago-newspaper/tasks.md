@@ -22,7 +22,7 @@
 ## 提出と検証
 - [x] T012 `tests/e2e.test.js`で主要操作・PDF寸法とページ数・モバイル表示を検証。
 - [x] T013 `README.md`、`docs/qiita-draft.md`、`docs/submission.md`を整備。
-- [ ] T014 OrcaRouter画像生成を実接続で確認。認証・モデル一覧・無料テキスト生成は成功、画像入力はHTTP 402のためクレジット反映待ち。
+- [x] T014 OrcaRouter画像生成を実接続で確認。同梱デモ画像、`openai/gpt-4o-mini`、JPEG data URIで記事生成と写真ID整合性を確認。
 - [x] T015a GitHub公開: https://github.com/t-ry/mago-newspaper
 - [ ] T015b Qiita記事公開、提出URL確定（投稿先・認証依存）。
 - [x] T016 OrcaRouterの実接続検証コマンドと残高・キー上限別のエラー表示を追加。

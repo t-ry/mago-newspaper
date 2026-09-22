@@ -8,4 +8,4 @@
 - 画面とPDFの一致、日本語折返しを優先してChromium PDFを採用。画像だけのPDFではなく文字を保持する。
 - 郵送事業者は未指定。汎用Webhookを実在の郵送APIとして扱わず、模擬アダプターの後ろに実事業者実装を追加する。
 - 公開先は https://github.com/t-ry/mago-newspaper 。PUBLIC設定と未認証アクセスを確認済み。
-- OrcaRouter実接続では認証、198件のモデル一覧、`orcarouter/free`のテキスト生成に成功。画像付き生成はHTTP 402となり、料金メタデータ上も無料の画像入力モデルは0件だったため、クレジット反映待ちと判断。
+- OrcaRouter実接続では認証、198件のモデル一覧、`orcarouter/free`のテキスト生成に成功。初回の画像付き生成はHTTP 402だったが、提供キーの再設定後、`openai/gpt-4o-mini`とJPEG data URIで記事生成に成功した。

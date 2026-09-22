@@ -23,14 +23,14 @@
 - [x] Qiita原稿: `docs/qiita-draft.md`
 - [x] READMEに導入・OrcaRouter・模擬郵送・制約を記載
 - [x] 公開リポジトリ作成・push、PUBLIC状態確認、未認証HTTP 200確認
-- [x] 実OrcaRouter疎通結果を記事へ反映（認証・モデル一覧・無料テキスト成功、画像生成は残高不足のHTTP 402）
+- [x] 実OrcaRouter疎通結果を記事へ反映（認証・モデル一覧・無料テキスト・画像付き記事生成に成功）
 - [x] 公開GitHub URLをQiita原稿へ反映
 - [x] AI HACK・OrcaRouter様への言及と公式リンクを記事へ反映
 - [x] Qiitaタグを確定（AI、React、JavaScript、ハッカソン、OrcaRouter）
 - [ ] Qiita投稿・公開URL確認
 - [ ] 提出フォームに両URLを記入
 
-OrcaRouterの画像入力を使う最終確認は、ワークスペースへのクレジット反映後に`npm run verify:orcarouter`で実行する。
+OrcaRouterの画像入力を使う最終確認は`npm run verify:orcarouter`で成功済み。
 Qiitaの`write_qiita`権限を持つトークンを`.env`の`QIITA_ACCESS_TOKEN`へ設定後、`npm run publish:qiita`で公開する。同じタイトルの記事が既にある場合は重複投稿せず、そのURLを返す。
 
 写真・APIキー・宛先・`.env`は公開対象に含めない。掲載スクリーンショットには同梱デモ素材のみを使う。
