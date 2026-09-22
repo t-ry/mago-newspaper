@@ -4,7 +4,7 @@
 
 ## 提出URL
 
-- GitHub: 公開先確認待ち
+- GitHub: https://github.com/t-ry/mago-newspaper （PUBLIC / main、公開確認済み）
 - Qiita: 原稿作成済み、投稿先・指定タグ・公開認証の確認待ち
 
 ## 5分デモ
@@ -21,11 +21,13 @@
 
 - [x] Qiita原稿: `docs/qiita-draft.md`
 - [x] READMEに導入・OrcaRouter・模擬郵送・制約を記載
-- [ ] 公開リポジトリ作成・pushと匿名閲覧確認
+- [x] 公開リポジトリ作成・push、PUBLIC状態確認
 - [ ] 実OrcaRouter疎通結果を記事へ反映
-- [ ] 公開GitHub URLをQiita原稿へ反映
+- [x] 公開GitHub URLをQiita原稿へ反映
 - [ ] 応募要項の指定タグを記事へ反映
 - [ ] Qiita投稿・公開URL確認
 - [ ] 提出フォームに両URLを記入
 
 写真・APIキー・宛先・`.env`は公開対象に含めない。掲載スクリーンショットには同梱デモ素材のみを使う。
+
+タグ候補: AI、React、個人開発、ハッカソン、OrcaRouter。募集要項の指定タグがあれば優先する。

@@ -1,7 +1,5 @@
 # 写真選びをAI編集長に任せる。「孫ニュースペーパ」をOrcaRouter × Spec Kitで作った
 
-> 投稿前にGitHub URLと実API検証結果を確定する原稿です。タグ候補: AI、React、個人開発、ハッカソン、OrcaRouter。募集要項の指定タグがある場合はそちらを優先してください。
-
 ## 撮った写真を、祖父母に届けるところまで
 
 子供の写真は、スマートフォンにどんどん増えていきます。でも「どの写真を送ろう」「ひとこと説明をつけよう」「そろそろ祖父母に近況を知らせよう」は、撮影とは別の仕事です。
@@ -10,7 +8,9 @@
 
 今回のMVPは、写真の一括アップロードから始めるWebアプリです。端末内の写真を常時自動収集する機能はまだありません。
 
-GitHub: **公開後にURLを記入**
+GitHub: https://github.com/t-ry/mago-newspaper
+
+![孫ニュースペーパの編集室](https://raw.githubusercontent.com/t-ry/mago-newspaper/main/docs/assets/home.png)
 
 ## できること
 
@@ -23,6 +23,10 @@ GitHub: **公開後にURLを記入**
 **印刷・郵送APIは今回、模擬注文です。実際の発送や料金の請求は発生しません。** 実事業者との接続は、APIの利用条件が決まった後の拡張です。
 
 APIキーがない環境でも動きを確認できるように、同梱イラストと固定文章を使うサンプル体験も用意しました。こちらは画面に「AI未使用」と表示し、実AI生成とは区別しています。
+
+![A4新聞のプレビューと承認画面](https://raw.githubusercontent.com/t-ry/mago-newspaper/main/docs/assets/newspaper.png)
+
+[生成したサンプルPDF](https://github.com/t-ry/mago-newspaper/blob/main/docs/assets/sample-newspaper.pdf)
 
 ## OrcaRouterをどこに組み込んだか
 
@@ -126,7 +130,9 @@ await fetch('https://api.orcarouter.ai/v1/chat/completions', {
 - ブラウザでサンプル生成からPDF・模擬注文まで操作する。
 - PDFがA4縦1ページであることと、幅390pxで横にはみ出さないことを確認する。
 
-実APIの疎通結果と最終テスト件数は、投稿時に`docs/verification.md`の結果に合わせて更新します。モックのテストを実APIの成功実績として扱わないようにしています。
+APIなどの自動テストは7件、ブラウザでの一連の操作テストは1件成功しました。本番ビルドも完了しています。
+
+現時点でOrcaRouterの実API疎通は未検証です。APIキーを設定した環境での確認が残っています。接続コードとモックによる契約テストの成功を、実APIの成功実績とは区別しています。最新の検証状況は[検証記録](https://github.com/t-ry/mago-newspaper/blob/main/docs/verification.md)に残しています。
 
 ## これから
 

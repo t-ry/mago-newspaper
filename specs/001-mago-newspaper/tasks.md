@@ -23,6 +23,7 @@
 - [x] T012 `tests/e2e.test.js`で主要操作・PDF寸法とページ数・モバイル表示を検証。
 - [x] T013 `README.md`、`docs/qiita-draft.md`、`docs/submission.md`を整備。
 - [ ] T014 OrcaRouter実接続を確認（APIキー依存）。
-- [ ] T015 GitHub公開とQiita記事公開、提出URL確定（公開先・認証依存）。
+- [x] T015a GitHub公開: https://github.com/t-ry/mago-newspaper
+- [ ] T015b Qiita記事公開、提出URL確定（投稿先・認証依存）。
 
 順序: Setup → US1 → US2 → US3 → 提出。外部依存の回答待ちは独立したローカル実装を妨げない。

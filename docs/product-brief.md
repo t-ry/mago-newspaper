@@ -16,7 +16,7 @@
 ## 残る外部依存
 
 - OrcaRouter APIキーの設定と実接続確認。
-- GitHub公開先の指定（候補 `t-ry/mago-newspaper`）。
+- GitHubは https://github.com/t-ry/mago-newspaper に公開済み。
 - Qiita投稿先、募集要項・指定タグ、公開用の認証。
 
 詳細は`specs/001-mago-newspaper/spec.md`と`tasks.md`を参照。
