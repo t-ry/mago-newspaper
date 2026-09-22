@@ -15,19 +15,25 @@ import { renderPdf } from "./pdf.js";
 export function createApp({
   apiKey = process.env.ORCAROUTER_API_KEY,
   model = process.env.ORCAROUTER_MODEL || "openai/gpt-4o-mini",
+  publicOrigin = process.env.PUBLIC_ORIGIN,
   pdfRenderer = renderPdf,
   aiGenerator = generateWithOrca,
 } = {}) {
   const app = express();
   const sessions = new Map();
   app.disable("x-powered-by");
+  app.set("trust proxy", 1);
   app.use("/api", (req, res, next) => {
     res.set("Cache-Control", "no-store");
     res.set("X-Content-Type-Options", "nosniff");
     const origin = req.headers.origin;
     if (origin) {
       try {
-        if (new URL(origin).host !== req.headers.host) throw new Error();
+        const allowedOrigins = new Set([
+          `${req.protocol}://${req.headers.host}`,
+          ...(publicOrigin ? [new URL(publicOrigin).origin] : []),
+        ]);
+        if (!allowedOrigins.has(new URL(origin).origin)) throw new Error();
       } catch {
         return res
           .status(403)
@@ -45,11 +51,9 @@ export function createApp({
       ?.slice(13);
     if (!sessions.has(sid)) {
       if (sessions.size >= 100)
-        return res
-          .status(503)
-          .json({
-            error: "デモの利用上限です。しばらく待ってお試しください。",
-          });
+        return res.status(503).json({
+          error: "デモの利用上限です。しばらく待ってお試しください。",
+        });
       sid = randomUUID();
       sessions.set(sid, { touched: now, papers: new Map(), busy: false });
       res.cookie("mago_session", sid, {
@@ -197,29 +201,23 @@ export function createApp({
   app.use((error, req, res, next) => {
     if (!req.path.startsWith("/api")) return next(error);
     if (error instanceof ZodError)
-      return res
-        .status(400)
-        .json({
-          error:
-            "入力内容を確認してください。写真形式・枚数・文字数・宛先に誤りがあります。",
-        });
+      return res.status(400).json({
+        error:
+          "入力内容を確認してください。写真形式・枚数・文字数・宛先に誤りがあります。",
+      });
     if (error.type === "entity.too.large")
-      return res
-        .status(413)
-        .json({
-          error: "写真の合計サイズが大きすぎます。枚数を減らしてください。",
-        });
+      return res.status(413).json({
+        error: "写真の合計サイズが大きすぎます。枚数を減らしてください。",
+      });
     if (error instanceof SyntaxError)
       return res
         .status(400)
         .json({ error: "リクエストの形式が正しくありません。" });
-    res
-      .status(error.status || 500)
-      .json({
-        error: error.status
-          ? error.message
-          : "処理に失敗しました。少し待って再度お試しください。",
-      });
+    res.status(error.status || 500).json({
+      error: error.status
+        ? error.message
+        : "処理に失敗しました。少し待って再度お試しください。",
+    });
   });
   return app;
 }

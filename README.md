@@ -58,6 +58,16 @@ npm start           # ビルド後の本番モード起動
 
 技術構成: React / Vite / Express / Zod / Playwright Chromium。画面とPDFは`shared/newspaper.js`の同じテンプレートから描画します。
 
+### Firebaseでスマホ向けに公開
+
+公開構成は、画面をFirebase Hosting、APIとPDF生成をCloud Run（東京リージョン）で動かします。HTTPSになるため、スマホのブラウザからカメラを安全に起動できます。Firebase / Google Cloudのプロジェクトと課金設定、Firebase CLI・gcloud CLIへのログインが必要です。
+
+```bash
+npm run deploy:firebase -- <FirebaseプロジェクトID>
+```
+
+このコマンドは必要なGoogle Cloud APIを有効化し、`.env`の`ORCAROUTER_API_KEY`をSecret Managerへ登録し、Cloud RunとFirebase Hostingを順に公開します。鍵の値はDockerイメージやGitへ含めません。現在のデータ保存先はCloud Runのメモリなので、MVPではインスタンス数を1に制限しています。再起動時には作成中の新聞が消えるため、継続運用ではFirestore / Cloud Storageへの移行が必要です。
+
 ### データと現在の制約
 
 - 写真と記事・宛先はサーバーメモリでセッション別に保持し、再起動で消えます。2時間利用のないセッションは次のAPIアクセス時に削除されます。
@@ -65,7 +75,7 @@ npm start           # ビルド後の本番モード起動
 - 初期設定はローカル利用です。公開サービス用のユーザー認証、永続保存、課金、実郵送APIは未実装。
 - 動画・撮影期間抽出・端末写真の自動収集・定期発行・編集嗜好学習は今後の拡張です。
 
-仕様・計画・タスク: [specs/001-mago-newspaper](specs/001-mago-newspaper/)。
+仕様・計画・タスク: [MVP本体](specs/001-mago-newspaper/) / [Firebase公開](specs/002-firebase-mobile-deploy/)。
 検証結果: [docs/verification.md](docs/verification.md)。Qiita記事: https://qiita.com/t-ry/items/5fde876e1a0c8c08cf40
 
 ---

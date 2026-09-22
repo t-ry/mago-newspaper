@@ -24,7 +24,7 @@ async function client(t, options = {}) {
   await new Promise((resolve) => server.once("listening", resolve));
   t.after(() => new Promise((resolve) => server.close(resolve)));
   let cookie = "";
-  return async (path, method = "GET", body, ownCookie = true) => {
+  return async (path, method = "GET", body, ownCookie = true, headers = {}) => {
     const response = await fetch(
       `http://127.0.0.1:${server.address().port}${path}`,
       {
@@ -32,6 +32,7 @@ async function client(t, options = {}) {
         headers: {
           "content-type": "application/json",
           ...(ownCookie && cookie ? { cookie } : {}),
+          ...headers,
         },
         body: body === undefined ? undefined : JSON.stringify(body),
       },
@@ -108,7 +109,26 @@ test("注文は承認・住所を検証し重複を防ぐ", async (t) => {
 });
 
 test("入力制限とキー未設定を明示しデモに自動フォールバックしない", async (t) => {
-  const call = await client(t, { apiKey: "" });
+  const call = await client(t, {
+    apiKey: "",
+    publicOrigin: "https://mago-demo.web.app",
+  });
+  assert.equal(
+    (
+      await call("/api/config", "GET", undefined, true, {
+        origin: "https://mago-demo.web.app",
+      })
+    ).status,
+    200,
+  );
+  assert.equal(
+    (
+      await call("/api/config", "GET", undefined, true, {
+        origin: "https://evil.example",
+      })
+    ).status,
+    403,
+  );
   assert.equal(
     (await call("/api/newspapers", "POST", { ...input, photos: [] })).status,
     400,

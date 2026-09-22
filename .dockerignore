@@ -1,0 +1,14 @@
+.cache
+.env
+.env.*
+!.env.example
+.firebase
+.git
+.github
+docs
+node_modules
+specs
+test-results
+tests
+Untitled
+*.log
