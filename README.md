@@ -8,6 +8,8 @@
 
 開発記事: [写真選びをAI編集長に任せる。「孫ニュースペーパ」をOrcaRouter × Spec Kitで作った](https://qiita.com/t-ry/items/5fde876e1a0c8c08cf40)
 
+公開デモ: https://main.d2lslwov00yd74.amplifyapp.com
+
 ## ハッカソンMVPの起動
 
 Node.js 20.19以降が必要です。
@@ -44,7 +46,7 @@ npm run verify:orcarouter
 
 ### OrcaRouterの利用箇所
 
-`server/orca.js`から`https://api.orcarouter.ai/v1/chat/completions`へBearer認証付きでリクエストします。`image_url`に写真を渡し、JSONで記事を受け取ってサーバーで検証します。初期モデルは`openai/gpt-4o-mini`。`ORCAROUTER_MODEL`で画像入力・JSON出力対応モデルに変更できます。
+`server/orca.js`から`https://api.orcarouter.ai/v1/chat/completions`へBearer認証付きでリクエストします。`image_url`に写真を渡し、JSONで記事を受け取ってサーバーで検証します。標準モデルは、画像入力と構造化出力を実機検証した`openai/gpt-5.2`。`ORCAROUTER_MODEL`で画像入力・JSON出力対応モデルに変更できます。
 
 ### 開発・検証
 
@@ -58,24 +60,24 @@ npm start           # ビルド後の本番モード起動
 
 技術構成: React / Vite / Express / Zod / Playwright Chromium。画面とPDFは`shared/newspaper.js`の同じテンプレートから描画します。
 
-### Firebaseでスマホ向けに公開
+### AWS Amplifyでスマホ向けに公開
 
-公開構成は、画面をFirebase Hosting、APIとPDF生成をCloud Run（東京リージョン）で動かします。HTTPSになるため、スマホのブラウザからカメラを安全に起動できます。Firebase / Google Cloudのプロジェクトと課金設定、Firebase CLI・gcloud CLIへのログインが必要です。
+画面をAWS Amplify Hosting、APIとPDF生成をAWS App Runner（東京リージョン）で公開しています。Amplifyの`/api/**`はApp RunnerへHTTPSで中継します。OrcaRouterキーはAWS Secrets Managerに保存し、専用IAMロールだけが読み取れます。
 
 ```bash
-npm run deploy:firebase -- <FirebaseプロジェクトID>
+AWS_CLI=/path/to/aws npm run deploy:aws
 ```
 
-このコマンドは必要なGoogle Cloud APIを有効化し、`.env`の`ORCAROUTER_API_KEY`をSecret Managerへ登録し、Cloud RunとFirebase Hostingを順に公開します。鍵の値はDockerイメージやGitへ含めません。現在のデータ保存先はCloud Runのメモリなので、MVPではインスタンス数を1に制限しています。再起動時には作成中の新聞が消えるため、継続運用ではFirestore / Cloud Storageへの移行が必要です。
+現在のデータ保存先はApp Runnerのメモリなので、MVPではインスタンス数を1に制限しています。再起動時には作成中の新聞が消れるため、継続運用ではAmazon S3 / DynamoDBなどへの移行が必要です。AWSリソースと停止手順は[docs/aws-deployment.md](docs/aws-deployment.md)に記載しています。
 
 ### データと現在の制約
 
 - 写真と記事・宛先はサーバーメモリでセッション別に保持し、再起動で消えます。2時間利用のないセッションは次のAPIアクセス時に削除されます。
 - 写真の実AI編集ではOrcaRouterと利用モデルの提供元へ画像が送信されます。
-- 初期設定はローカル利用です。公開サービス用のユーザー認証、永続保存、課金、実郵送APIは未実装。
+- 公開MVPにユーザー認証、永続保存、利用者への課金、実郵送APIは未実装。
 - 動画・撮影期間抽出・端末写真の自動収集・定期発行・編集嗜好学習は今後の拡張です。
 
-仕様・計画・タスク: [MVP本体](specs/001-mago-newspaper/) / [Firebase公開](specs/002-firebase-mobile-deploy/)。
+仕様・計画・タスク: [MVP本体](specs/001-mago-newspaper/) / [AWS Amplify公開](specs/003-aws-amplify-deploy/) / [AI品質・チークUI](specs/004-smarter-ai-teak-ui/) / [中止したFirebase案](specs/002-firebase-mobile-deploy/)。
 検証結果: [docs/verification.md](docs/verification.md)。Qiita記事: https://qiita.com/t-ry/items/5fde876e1a0c8c08cf40
 
 ---
@@ -710,10 +712,7 @@ PDF Generator
   "id": "event_001",
   "title": "公園で自転車",
   "startAt": "2026-09-20T14:00:00+09:00",
-  "mediaIds": [
-    "media_001",
-    "media_002"
-  ]
+  "mediaIds": ["media_001", "media_002"]
 }
 ```
 
@@ -725,9 +724,7 @@ PDF Generator
   "eventId": "event_001",
   "headline": "公園で自転車の練習！",
   "body": "公園で自転車の練習をしました。",
-  "mediaIds": [
-    "media_001"
-  ]
+  "mediaIds": ["media_001"]
 }
 ```
 
@@ -739,9 +736,7 @@ PDF Generator
   "periodStart": "2026-09-14",
   "periodEnd": "2026-09-20",
   "status": "waiting_review",
-  "articleIds": [
-    "article_001"
-  ]
+  "articleIds": ["article_001"]
 }
 ```
 

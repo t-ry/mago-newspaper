@@ -52,8 +52,19 @@ async function main() {
   const items = await qiita("/authenticated_user/items?page=1&per_page=100");
   const existing = items.find((item) => item.title === title);
   if (existing) {
+    const item = await qiita(`/items/${existing.id}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        title,
+        body,
+        private: false,
+        tags: ["AI", "React", "JavaScript", "ハッカソン", "OrcaRouter"].map(
+          (name) => ({ name, versions: [] }),
+        ),
+      }),
+    });
     console.log(
-      JSON.stringify({ published: true, existing: true, url: existing.url }),
+      JSON.stringify({ published: true, updated: true, url: item.url }),
     );
     return;
   }

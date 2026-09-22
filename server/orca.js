@@ -11,7 +11,7 @@ export async function generateWithOrca(
   input,
   {
     apiKey = process.env.ORCAROUTER_API_KEY,
-    model = process.env.ORCAROUTER_MODEL || "openai/gpt-4o-mini",
+    model = process.env.ORCAROUTER_MODEL || "openai/gpt-5.2",
     fetchImpl = fetch,
   } = {},
 ) {
@@ -113,15 +113,13 @@ export function demoEditorial(input) {
     headline: `${input.childName}の毎日が、新聞になりました。`.slice(0, 32),
     intro:
       "おじいちゃん、おばあちゃんへ。今月の何気ない日常を、小さな新聞にしてお届けします。",
-    articles: input.photos
-      .slice(0, 3)
-      .map((p, i) => ({
-        photoId: p.id,
-        headline: headlines[i],
-        body: bodies[i],
-        reason:
-          "サンプル体験のため、追加された順に掲載しています。AIによる選定ではありません。",
-      })),
+    articles: input.photos.slice(0, 3).map((p, i) => ({
+      photoId: p.id,
+      headline: headlines[i],
+      body: bodies[i],
+      reason:
+        "サンプル体験のため、追加された順に掲載しています。AIによる選定ではありません。",
+    })),
     message: "また会える日を、家族みんなで楽しみにしています。",
   };
 }

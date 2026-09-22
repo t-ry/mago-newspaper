@@ -14,6 +14,8 @@
 
 GitHub: https://github.com/t-ry/mago-newspaper
 
+公開デモ: https://main.d2lslwov00yd74.amplifyapp.com
+
 ![孫ニュースペーパの編集室](https://raw.githubusercontent.com/t-ry/mago-newspaper/main/docs/assets/home.png)
 
 ## できること
@@ -31,6 +33,22 @@ APIキーがない環境でも動きを確認できるように、同梱イラ�
 ![A4新聞のプレビューと承認画面](https://raw.githubusercontent.com/t-ry/mago-newspaper/main/docs/assets/newspaper.png)
 
 [生成したサンプルPDF](https://github.com/t-ry/mago-newspaper/blob/main/docs/assets/sample-newspaper.pdf)
+
+## AWS Amplifyでスマホから使えるようにした
+
+スマホのブラウザからHTTPSで開けるように、画面をAWS Amplify Hostingへ公開しました。`/api/**`は同じURLのままAWS App Runnerへリバースプロキシし、既存のExpressとPlaywright ChromiumをDockerコンテナで動かしています。
+
+```text
+スマホ
+  ↓ HTTPS
+AWS Amplify Hosting（React）
+  ↓ /api/**
+AWS App Runner（Express / OrcaRouter / A4 PDF）
+  ↓
+AWS Secrets Manager（OrcaRouter APIキー）
+```
+
+OrcaRouterキーはブラウザ、GitHub、Dockerイメージへ含めず、Secrets ManagerからApp Runnerへ実行時に渡します。現在の記事と写真はサーバーメモリに置くMVP仕様なので、App Runnerは最大1インスタンスに制限しています。再起動でデータが消えるため、継続運用ではS3やDynamoDBへの移行が必要です。
 
 ## OrcaRouterをどこに組み込んだか
 
@@ -58,7 +76,7 @@ await fetch("https://api.orcarouter.ai/v1/chat/completions", {
     "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    model: process.env.ORCAROUTER_MODEL || "openai/gpt-4o-mini",
+    model: process.env.ORCAROUTER_MODEL || "openai/gpt-5.2",
     messages: [
       { role: "system", content: editorialInstructions },
       {
@@ -153,10 +171,12 @@ await fetch("https://api.orcarouter.ai/v1/chat/completions", {
 - OrcaRouterへ画像と認証ヘッダーを送る形式を、モック応答で検証する。
 - ブラウザでサンプル生成からPDF・模擬注文まで操作する。
 - PDFがA4縦1ページであることと、幅390pxで横にはみ出さないことを確認する。
+- Amplifyの公開URLで、カメラ入力処理からPDF・模擬注文までのE2Eを確認する。
+- 公開環境のSecrets ManagerからOrcaRouterキーを読み、実画像入力の記事生成を確認する。
 
-APIなどの自動テストは7件、ブラウザでの一連の操作テストは1件成功しました。本番ビルドも完了しています。
+APIなどの自動テストは7件、ブラウザでの一連の操作テストは1件成功しました。本番ビルドに加え、Amplifyの公開URLでも同じブラウザテストが成功しています。
 
-2026年9月22日にOrcaRouterの実APIへ接続し、APIキー認証、モデル一覧の取得、`orcarouter/free`によるテキスト生成を確認しました。さらに、個人写真の代わりに同梱イラストをJPEGへ変換し、`openai/gpt-4o-mini`へdata URIで送る検証を実施。記事1件の生成、元写真IDの参照、JSON構造の検証まで成功しました。この確認は`npm run verify:orcarouter`で再現できます。最新状況は[検証記録](https://github.com/t-ry/mago-newspaper/blob/main/docs/verification.md)に残しています。
+2026年9月22日にOrcaRouterの実APIへ接続し、APIキー認証、モデル一覧の取得、`orcarouter/free`によるテキスト生成を確認しました。さらに、個人写真の代わりに同梱イラストをJPEGへ変換し、`openai/gpt-5.2`へdata URIで送る検証を実施。記事1件の生成、元写真IDの参照、JSON構造の検証まで成功しました。この確認は`npm run verify:orcarouter`で再現できます。最新状況は[検証記録](https://github.com/t-ry/mago-newspaper/blob/main/docs/verification.md)に残しています。
 
 ## これから
 

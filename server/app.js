@@ -14,7 +14,7 @@ import { renderPdf } from "./pdf.js";
 
 export function createApp({
   apiKey = process.env.ORCAROUTER_API_KEY,
-  model = process.env.ORCAROUTER_MODEL || "openai/gpt-4o-mini",
+  model = process.env.ORCAROUTER_MODEL || "openai/gpt-5.2",
   publicOrigin = process.env.PUBLIC_ORIGIN,
   pdfRenderer = renderPdf,
   aiGenerator = generateWithOrca,

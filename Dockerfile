@@ -1,4 +1,4 @@
-FROM node:20-bookworm AS build
+FROM node:22-trixie-slim AS build
 
 WORKDIR /app
 COPY package.json package-lock.json ./
@@ -9,7 +9,7 @@ COPY shared ./shared
 COPY src ./src
 RUN npm run build
 
-FROM node:20-bookworm-slim AS runtime
+FROM node:22-trixie-slim AS runtime
 
 ENV NODE_ENV=production \
     HOST=0.0.0.0 \
@@ -17,6 +17,9 @@ ENV NODE_ENV=production \
     PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 
 WORKDIR /app
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && rm -rf /var/lib/apt/lists/*
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev \
     && npx playwright install --with-deps chromium \

@@ -1,6 +1,6 @@
 # Feature Specification: スマホ公開環境
 
-**Created**: 2026-09-22 | **Status**: デプロイ準備中
+**Created**: 2026-09-22 | **Status**: AWS移行のため中止
 
 親がスマホからHTTPSのURLを開き、カメラ撮影から新聞作成まで利用できる公開環境を用意する。
 

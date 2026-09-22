@@ -13,12 +13,16 @@
     "test": "node --test tests/api.test.js",
     "test:e2e": "node --test tests/e2e.test.js",
     "verify:orcarouter": "node --env-file=.env scripts/verify-orcarouter.mjs",
+    "verify:public": "node scripts/verify-public.mjs",
     "publish:qiita": "node --env-file=.env scripts/publish-qiita.mjs",
-    "deploy:firebase": "bash scripts/deploy-firebase.sh"
+    "deploy:aws": "bash scripts/deploy-aws.sh",
+    "pause:aws": "bash scripts/pause-aws.sh",
+    "resume:aws": "bash scripts/resume-aws.sh"
   },
   "dependencies": {
     "@fontsource/noto-sans-jp": "^5.3.0",
     "@fontsource/noto-serif-jp": "^5.2.0",
+    "@fontsource/zen-maru-gothic": "^5.3.0",
     "express": "^5.1.0",
     "lucide-react": "^0.468.0",
     "playwright": "^1.55.0",

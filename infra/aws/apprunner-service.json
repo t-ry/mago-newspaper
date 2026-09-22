@@ -1,0 +1,41 @@
+{
+  "ServiceName": "mago-newspaper-api",
+  "SourceConfiguration": {
+    "AuthenticationConfiguration": {
+      "AccessRoleArn": "arn:aws:iam::372387410740:role/MagoNewspaperAppRunnerEcrAccess"
+    },
+    "AutoDeploymentsEnabled": false,
+    "ImageRepository": {
+      "ImageIdentifier": "372387410740.dkr.ecr.ap-northeast-1.amazonaws.com/mago-newspaper-api:latest",
+      "ImageRepositoryType": "ECR",
+      "ImageConfiguration": {
+        "Port": "8080",
+        "RuntimeEnvironmentVariables": {
+          "ORCAROUTER_MODEL": "openai/gpt-5.2",
+          "PUBLIC_ORIGIN": "https://main.d2lslwov00yd74.amplifyapp.com"
+        },
+        "RuntimeEnvironmentSecrets": {
+          "ORCAROUTER_API_KEY": "arn:aws:secretsmanager:ap-northeast-1:372387410740:secret:mago-newspaper/orcarouter-api-key-wAWk73"
+        }
+      }
+    }
+  },
+  "InstanceConfiguration": {
+    "Cpu": "1 vCPU",
+    "Memory": "2 GB",
+    "InstanceRoleArn": "arn:aws:iam::372387410740:role/MagoNewspaperAppRunnerInstance"
+  },
+  "AutoScalingConfigurationArn": "arn:aws:apprunner:ap-northeast-1:372387410740:autoscalingconfiguration/mago-newspaper-single-instance/1/188d144c9ca84f919718a7d6965325cc",
+  "HealthCheckConfiguration": {
+    "Protocol": "HTTP",
+    "Path": "/api/config",
+    "Interval": 10,
+    "Timeout": 5,
+    "HealthyThreshold": 1,
+    "UnhealthyThreshold": 5
+  },
+  "Tags": [
+    { "Key": "Project", "Value": "mago-newspaper" },
+    { "Key": "Environment", "Value": "hackathon-mvp" }
+  ]
+}

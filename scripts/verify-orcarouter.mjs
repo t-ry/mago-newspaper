@@ -52,7 +52,7 @@ async function main() {
     JSON.stringify({
       verified: true,
       endpoint: "https://api.orcarouter.ai/v1/chat/completions",
-      model: process.env.ORCAROUTER_MODEL || "openai/gpt-4o-mini",
+      model: process.env.ORCAROUTER_MODEL || "openai/gpt-5.2",
       imageInput: "jpeg-data-uri",
       articleCount: result.articles.length,
       validPhotoReferences: result.articles.every(
