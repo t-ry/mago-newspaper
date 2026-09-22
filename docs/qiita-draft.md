@@ -156,7 +156,7 @@ await fetch("https://api.orcarouter.ai/v1/chat/completions", {
 
 APIなどの自動テストは7件、ブラウザでの一連の操作テストは1件成功しました。本番ビルドも完了しています。
 
-現時点でOrcaRouterの実API疎通は未検証です。APIキーを設定した環境での確認が残っています。接続コードとモックによる契約テストの成功を、実APIの成功実績とは区別しています。最新の検証状況は[検証記録](https://github.com/t-ry/mago-newspaper/blob/main/docs/verification.md)に残しています。
+2026年9月22日にOrcaRouterの実APIへ接続し、APIキー認証、モデル一覧の取得、`orcarouter/free`によるテキスト生成までは成功しました。一方、画像付き記事生成は、現在のワークスペースで画像対応モデルを使えるクレジットがなくHTTP 402となっています。そのため、写真からの記事生成については、モックによる契約テストと実APIの成功を区別し、未完了として記録しています。クレジット反映後は、個人写真を使わず同梱イラストで`npm run verify:orcarouter`を再実行できます。最新状況は[検証記録](https://github.com/t-ry/mago-newspaper/blob/main/docs/verification.md)に残しています。
 
 ## これから
 

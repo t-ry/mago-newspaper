@@ -21,6 +21,12 @@ http://127.0.0.1:3000 を開きます。LinuxでChromiumの共有ライブラリ
 
 `.env`に`ORCAROUTER_API_KEY`を設定すると実写真のAI編集が使えます。キー未設定でも「サンプルで体験する」からPDFと模擬注文を試せます。`.env`の変更後はサーバーを再起動してください。
 
+画像対応モデルの呼び出しにはOrcaRouterワークスペースの利用可能なクレジットが必要です。設定後は、個人写真を送信せず同梱イラストで疎通確認できます。
+
+```bash
+npm run verify:orcarouter
+```
+
 ### 実装済みの機能
 
 - JPEG / PNG / WebPを最大12枚まとめて追加（1枚10MB以内）。ブラウザで最大1600pxに縮小して再エンコード。
@@ -41,6 +47,7 @@ http://127.0.0.1:3000 を開きます。LinuxでChromiumの共有ライブラリ
 npm test             # API・承認・注文・OrcaRouterリクエスト形式
 npm run build        # 本番ビルド
 npm run test:e2e     # 開発サーバー起動中に実行。ブラウザ・PDF・模擬注文
+npm run verify:orcarouter # 実APIを同梱デモ画像で検証（キーとクレジットが必要）
 npm start           # ビルド後の本番モード起動
 ```
 

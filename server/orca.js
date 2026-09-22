@@ -64,12 +64,22 @@ JSONだけを返してください。構造: {"headline":"新聞の主見出し3
     );
   }
   if (!response.ok) {
+    const errorPayload = await response.json().catch(() => ({}));
+    const errorCode = errorPayload?.error?.code;
     const message =
-      response.status === 401 || response.status === 403
+      response.status === 401
         ? "OrcaRouterの認証に失敗しました。APIキーを確認してください。"
-        : response.status === 429
-          ? "OrcaRouterが混み合っています。少し待って再度お試しください。"
-          : `OrcaRouterがエラーを返しました（${response.status}）。モデル設定と利用残高を確認してください。`;
+        : response.status === 402
+          ? "OrcaRouterの画像対応モデルを利用できるクレジットがありません。ワークスペースの残高またはハッカソン提供クレジットを確認してください。"
+          : errorCode === "insufficient_user_quota"
+            ? "OrcaRouterのワークスペース残高またはメンバー予算の上限に達しています。管理画面を確認してください。"
+            : errorCode === "pre_consume_token_quota_failed"
+              ? "OrcaRouter APIキーの利用上限に達しています。キーのクォータ設定を確認してください。"
+              : response.status === 403
+                ? "OrcaRouterでこのモデルの利用が許可されていません。APIキーのモデル許可と利用上限を確認してください。"
+                : response.status === 429
+                  ? "OrcaRouterが混み合っています。少し待って再度お試しください。"
+                  : `OrcaRouterがエラーを返しました（${response.status}）。モデル設定と利用残高を確認してください。`;
     throw new AppError(502, message);
   }
   try {

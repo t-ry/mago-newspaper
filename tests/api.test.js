@@ -197,6 +197,37 @@ test("OrcaRouterへ実画像とBearer認証を送り、応答を検証する", a
       }),
     /認証/,
   );
+  await assert.rejects(
+    () =>
+      generateWithOrca(input, {
+        apiKey: "test-only",
+        fetchImpl: async () =>
+          new Response(
+            JSON.stringify({
+              error: { type: "orcarouter_api_error", code: "payment_required" },
+            }),
+            { status: 402, headers: { "content-type": "application/json" } },
+          ),
+      }),
+    /クレジット/,
+  );
+  await assert.rejects(
+    () =>
+      generateWithOrca(input, {
+        apiKey: "test-only",
+        fetchImpl: async () =>
+          new Response(
+            JSON.stringify({
+              error: {
+                type: "orcarouter_api_error",
+                code: "pre_consume_token_quota_failed",
+              },
+            }),
+            { status: 403, headers: { "content-type": "application/json" } },
+          ),
+      }),
+    /APIキーの利用上限/,
+  );
 });
 
 test("並行する注文は同じ結果を返し、処理中の編集は拒否する", async (t) => {

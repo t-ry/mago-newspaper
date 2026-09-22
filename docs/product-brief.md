@@ -15,7 +15,7 @@
 
 ## 残る外部依存
 
-- OrcaRouter APIキーの設定と実接続確認。
+- OrcaRouter APIキーは設定済み。認証・モデル一覧・無料テキスト生成は実接続確認済み。画像入力対応モデルの確認はクレジット反映待ち。
 - GitHubは https://github.com/t-ry/mago-newspaper に公開済み。
 - Qiita投稿先、募集要項・指定タグ、公開用の認証。
 

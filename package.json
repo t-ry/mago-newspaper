@@ -11,7 +11,9 @@
     "build": "vite build",
     "start": "NODE_ENV=production node --env-file-if-exists=.env server/index.js",
     "test": "node --test tests/api.test.js",
-    "test:e2e": "node --test tests/e2e.test.js"
+    "test:e2e": "node --test tests/e2e.test.js",
+    "verify:orcarouter": "node --env-file=.env scripts/verify-orcarouter.mjs",
+    "publish:qiita": "node --env-file=.env scripts/publish-qiita.mjs"
   },
   "dependencies": {
     "@fontsource/noto-sans-jp": "^5.3.0",
