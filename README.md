@@ -6,6 +6,8 @@
 
 [生成したサンプルA4新聞PDF](docs/assets/sample-newspaper.pdf)
 
+開発記事: [写真選びをAI編集長に任せる。「孫ニュースペーパ」をOrcaRouter × Spec Kitで作った](https://qiita.com/t-ry/items/5fde876e1a0c8c08cf40)
+
 ## ハッカソンMVPの起動
 
 Node.js 20.19以降が必要です。
@@ -61,7 +63,7 @@ npm start           # ビルド後の本番モード起動
 - 動画・撮影期間抽出・端末写真の自動収集・定期発行・編集嗜好学習は今後の拡張です。
 
 仕様・計画・タスク: [specs/001-mago-newspaper](specs/001-mago-newspaper/)。
-検証結果: [docs/verification.md](docs/verification.md)。記事原稿: [docs/qiita-draft.md](docs/qiita-draft.md)。
+検証結果: [docs/verification.md](docs/verification.md)。Qiita記事: https://qiita.com/t-ry/items/5fde876e1a0c8c08cf40
 
 ---
 

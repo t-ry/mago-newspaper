@@ -15,7 +15,8 @@
 - npm導入時の監査: 既知の脆弱性0件。
 - OrcaRouter実API: APIキー認証、`GET /v1/models`（198モデル）、`orcarouter/free`のテキスト生成が成功。
 - OrcaRouter画像生成: `openai/gpt-4o-mini`へ同梱デモ画像をJPEG data URIで送信し、記事1件、写真ID参照、生成文章の構造検証が成功。
-- Spec Kit成果物監査: 9件の機能要件と5件の成功条件を実装・検証タスクへ対応づけ、重大な不整合0件。SC-004を実APIで達成し、SC-005はQiita公開待ち。
+- Qiita公開: https://qiita.com/t-ry/items/5fde876e1a0c8c08cf40
+- Spec Kit成果物監査: 9件の機能要件と5件の成功条件を実装・検証タスクへ対応づけ、重大な不整合0件。SC-004を実APIで達成し、SC-005の両URLを確定。
 
 ## 修正した不具合
 

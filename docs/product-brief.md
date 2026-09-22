@@ -17,6 +17,6 @@
 
 - OrcaRouter APIキーは設定済み。認証・モデル一覧・無料テキスト生成・画像付き記事生成を実接続確認済み。
 - GitHubは https://github.com/t-ry/mago-newspaper に公開済み。
-- Qiita投稿先、募集要項・指定タグ、公開用の認証。
+- Qiita記事は https://qiita.com/t-ry/items/5fde876e1a0c8c08cf40 に公開済み。
 
 詳細は`specs/001-mago-newspaper/spec.md`と`tasks.md`を参照。

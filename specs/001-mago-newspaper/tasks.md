@@ -24,7 +24,7 @@
 - [x] T013 `README.md`、`docs/qiita-draft.md`、`docs/submission.md`を整備。
 - [x] T014 OrcaRouter画像生成を実接続で確認。同梱デモ画像、`openai/gpt-4o-mini`、JPEG data URIで記事生成と写真ID整合性を確認。
 - [x] T015a GitHub公開: https://github.com/t-ry/mago-newspaper
-- [ ] T015b Qiita記事公開、提出URL確定（投稿先・認証依存）。
+- [x] T015b Qiita記事公開、提出URL確定: https://qiita.com/t-ry/items/5fde876e1a0c8c08cf40
 - [x] T016 OrcaRouterの実接続検証コマンドと残高・キー上限別のエラー表示を追加。
 - [x] T017 Qiita原稿から重複を防いで公開するAPI投稿コマンドを追加。
 

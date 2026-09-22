@@ -6,7 +6,7 @@
 
 - GitHub: https://github.com/t-ry/mago-newspaper （PUBLIC / main、公開確認済み）
 - Qiita投稿先: https://qiita.com/t-ry
-- Qiita記事: 原稿作成済み、公開認証の設定待ち
+- Qiita記事: https://qiita.com/t-ry/items/5fde876e1a0c8c08cf40 （公開済み）
 
 ## 5分デモ
 
@@ -27,12 +27,12 @@
 - [x] 公開GitHub URLをQiita原稿へ反映
 - [x] AI HACK・OrcaRouter様への言及と公式リンクを記事へ反映
 - [x] Qiitaタグを確定（AI、React、JavaScript、ハッカソン、OrcaRouter）
-- [ ] Qiita投稿・公開URL確認
+- [x] Qiita投稿・公開URL確認
 - [ ] 提出フォームに両URLを記入
 
 OrcaRouterの画像入力を使う最終確認は`npm run verify:orcarouter`で成功済み。
-Qiitaの`write_qiita`権限を持つトークンを`.env`の`QIITA_ACCESS_TOKEN`へ設定後、`npm run publish:qiita`で公開する。同じタイトルの記事が既にある場合は重複投稿せず、そのURLを返す。
+Qiita記事は`npm run publish:qiita`で公開済み。同じタイトルの記事がある場合は重複投稿せず、そのURLを返す。
 
 写真・APIキー・宛先・`.env`は公開対象に含めない。掲載スクリーンショットには同梱デモ素材のみを使う。
 
-タグ候補: AI、React、個人開発、ハッカソン、OrcaRouter。募集要項の指定タグがあれば優先する。
+投稿タグ: AI、React、JavaScript、ハッカソン、OrcaRouter。

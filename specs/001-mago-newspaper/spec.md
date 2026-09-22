@@ -1,6 +1,6 @@
 # Feature Specification: 孫ニュースペーパ MVP
 
-**Created**: 2026-09-22 | **Status**: MVP実装・OrcaRouter実API検証完了（模擬郵送）
+**Created**: 2026-09-22 | **Status**: MVP実装・実API検証・公開URL確定（模擬郵送）
 
 親が撮った写真をAIが選び、祖父母向けの新聞に編集する。親の最終承認を経て印刷・郵送につなぐ。
 
@@ -67,7 +67,7 @@
 - SC-002: 生成PDFがA4縦1ページで、日本語と写真を目視確認できる。
 - SC-003: 未承認注文・承認後編集・重複注文のテストが通る。
 - SC-004: 実API設定時に写真を使ったOrcaRouter生成が1回以上成功する。
-- SC-005: 2026-09-22 15:00 JSTまでにGitHub公開URLとQiita記事URLを提出可能にする（公開先・認証に依存）。
+- SC-005: 2026-09-22 15:00 JSTまでにGitHub公開URLとQiita記事URLを提出可能にする。
 
 ## Assumptions / Scope
 
@@ -76,4 +76,4 @@
 - 「編集」は掲載写真の配置と新聞記事編集。画像の生成的な改変は行わない。
 - 郵送先は日本国内を仮定。事業者未指定のためデモアダプターを先行実装し、実発送は未接続として扱う。
 - 初期版はローカルまたは単一デモ環境。データはメモリ保持し、再起動・期限切れで消える。恒久的な写真保管はしない。
-- 既存READMEは確認済みで`docs/product-vision.md`に保存。GitHubは`https://github.com/t-ry/mago-newspaper`に公開。
+- 既存READMEは確認済みで`docs/product-vision.md`に保存。GitHubは`https://github.com/t-ry/mago-newspaper`、Qiita記事は`https://qiita.com/t-ry/items/5fde876e1a0c8c08cf40`に公開。
