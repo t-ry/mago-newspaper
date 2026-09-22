@@ -24,6 +24,8 @@ AWS_CLI=/path/to/aws npm run deploy:aws
 
 DockerイメージをECRへpushしてApp Runnerのデプロイを開始し、`dist/`をAmplify Hostingへ手動デプロイする。OrcaRouterキーは更新しない。
 
+各npmスクリプトはPATH上の`aws`、または`/tmp/mago-aws-bin/aws`を自動検出する。別の場所にある場合は`AWS_CLI=/path/to/aws`を付けて実行する。
+
 Docker実行イメージはNode.js 22 / Debian 13 slimを基に、Playwrightが必要とするChromiumと実行ライブラリだけを導入する。アプリは`node`ユーザーで実行する。2026-09-22のECR基本スキャン結果はCritical 0、High 9、Medium 13、Low 2、Undefined 1。
 
 ## 一時停止と再開

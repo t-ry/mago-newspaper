@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-aws_cli="${AWS_CLI:-aws}"
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$script_dir/find-aws-cli.sh"
+aws_cli="$(find_aws_cli)"
 profile="${AWS_PROFILE:-mago}"
 region="ap-northeast-1"
 account_id="372387410740"
