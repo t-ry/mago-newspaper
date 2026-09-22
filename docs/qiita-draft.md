@@ -1,5 +1,9 @@
 # 写真選びをAI編集長に任せる。「孫ニュースペーパ」をOrcaRouter × Spec Kitで作った
 
+この記事は、[AI HACK 2026](https://aihackathon.jp/)で開発したハッカソンMVPの記録です。AI HACKは、AIプロダクトを短期間で形にするハッカソン。今回は「離れて暮らす祖父母へ、孫の何気ない日常を紙で届ける」というテーマで挑戦しました。
+
+開発では、AI APIの入口として[OrcaRouter様](https://www.orcarouter.ai/ja)を利用しています。AI HACKという制作と発表の機会、そしてOrcaRouter様から提供いただいたAPI環境に、この場を借りて感謝申し上げます。
+
 ## 撮った写真を、祖父母に届けるところまで
 
 子供の写真は、スマートフォンにどんどん増えていきます。でも「どの写真を送ろう」「ひとこと説明をつけよう」「そろそろ祖父母に近況を知らせよう」は、撮影とは別の仕事です。
@@ -30,7 +34,7 @@ APIキーがない環境でも動きを確認できるように、同梱イラ�
 
 ## OrcaRouterをどこに組み込んだか
 
-OrcaRouterは、写真から記事を作る処理の入口です。ブラウザから直接呼ぶとAPIキーが見えてしまうため、Expressサーバーから呼び出します。
+[OrcaRouter様](https://www.orcarouter.ai/ja)は、OpenAI互換の単一エンドポイントから複数のAIモデルを利用できるAIゲートウェイです。このMVPでは、写真から記事を作る処理の入口として採用しました。ブラウザから直接呼ぶとAPIキーが見えてしまうため、Expressサーバーから呼び出します。
 
 ```text
 写真をまとめて追加
@@ -47,25 +51,31 @@ OrcaRouter /v1/chat/completions
 リクエストの中心部分は次のようになっています。実装は`server/orca.js`にあります。
 
 ```js
-await fetch('https://api.orcarouter.ai/v1/chat/completions', {
-  method: 'POST',
+await fetch("https://api.orcarouter.ai/v1/chat/completions", {
+  method: "POST",
   headers: {
     Authorization: `Bearer ${process.env.ORCAROUTER_API_KEY}`,
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    model: process.env.ORCAROUTER_MODEL || 'openai/gpt-4o-mini',
+    model: process.env.ORCAROUTER_MODEL || "openai/gpt-4o-mini",
     messages: [
-      { role: 'system', content: editorialInstructions },
+      { role: "system", content: editorialInstructions },
       {
-        role: 'user',
+        role: "user",
         content: [
-          { type: 'text', text: '写真ID: photo-1。祖父母向けの記事を作ってください。' },
-          { type: 'image_url', image_url: { url: photoDataUrl, detail: 'low' } },
+          {
+            type: "text",
+            text: "写真ID: photo-1。祖父母向けの記事を作ってください。",
+          },
+          {
+            type: "image_url",
+            image_url: { url: photoDataUrl, detail: "low" },
+          },
         ],
       },
     ],
-    response_format: { type: 'json_object' },
+    response_format: { type: "json_object" },
     max_tokens: 2400,
   }),
   signal: AbortSignal.timeout(90_000),
@@ -110,15 +120,29 @@ await fetch('https://api.orcarouter.ai/v1/chat/completions', {
 
 仕様をまとめた場所は`specs/001-mago-newspaper/`です。
 
-| 文書 | 決めたこと |
-| --- | --- |
-| spec.md | ユーザー体験、受け入れ条件、対象外 |
-| plan.md | 技術構成と保存方式 |
-| data-model.md | 新聞の版と承認・注文の状態 |
-| contracts/api.md | APIの入力・出力・エラー |
-| tasks.md | 実装と検証の作業一覧 |
+| 文書             | 決めたこと                         |
+| ---------------- | ---------------------------------- |
+| spec.md          | ユーザー体験、受け入れ条件、対象外 |
+| plan.md          | 技術構成と保存方式                 |
+| data-model.md    | 新聞の版と承認・注文の状態         |
+| contracts/api.md | APIの入力・出力・エラー            |
+| tasks.md         | 実装と検証の作業一覧               |
 
 特に役立ったのは、「自動化する部分」と「人が確認する部分」を先に分けたことです。写真選定・記事作成・レイアウトはAIとプログラムへ。思い出としての正しさと届ける判断は親へ。この区分が、そのまま画面とAPIの設計になりました。
+
+## AI HACKで5日間のMVPに絞ったこと
+
+[AI HACK 2026](https://aihackathon.jp/)は、2026年9月19日から23日までの5日間でAIプロダクトを作るハッカソンです。限られた期間でデモ可能な体験を完成させるため、今回は次の一本に絞りました。
+
+```text
+写真をまとめて追加
+  → AIが選定・記事作成
+  → 親が修正・承認
+  → A4新聞PDF
+  → 模擬の印刷・郵送注文
+```
+
+元の構想には、動画解析、端末写真の定期収集、毎週の自動発行、編集傾向の学習もあります。しかし、ハッカソンでは「祖父母に紙で届く」という価値を端から端まで見せることを優先しました。実郵送事業者が未定の部分は模擬注文と明示し、できていない接続を成功したように見せないことも仕様に含めています。
 
 ## 検証したこと
 
@@ -139,3 +163,5 @@ APIなどの自動テストは7件、ブラウザでの一連の操作テスト�
 次は、写真ライブラリの定期収集、動画からの代表フレーム抽出、家族ごとの編集方針、実際の郵送事業者との接続です。複数家族が使うサービスにするには、ユーザー認証・永続保存・運用上のデータ管理も必要です。
 
 「撮るだけで、届く」を目指しながら、まずは写真を新聞にして、祖父母と同じ一枚を見ながら話せるところまで。そんな、小さな家族の編集室を作りました。
+
+最後に、短期間でプロダクトを形にする機会をくださった[AI HACK運営事務局の皆様](https://aihackathon.jp/)と、AI機能を支えるAPI環境を提供くださった[OrcaRouter様](https://www.orcarouter.ai/ja)に、あらためて感謝いたします。

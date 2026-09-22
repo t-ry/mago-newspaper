@@ -5,7 +5,8 @@
 ## 提出URL
 
 - GitHub: https://github.com/t-ry/mago-newspaper （PUBLIC / main、公開確認済み）
-- Qiita: 原稿作成済み、投稿先・指定タグ・公開認証の確認待ち
+- Qiita投稿先: https://qiita.com/t-ry
+- Qiita記事: 原稿作成済み、公開認証の設定待ち
 
 ## 5分デモ
 
@@ -24,7 +25,8 @@
 - [x] 公開リポジトリ作成・push、PUBLIC状態確認、未認証HTTP 200確認
 - [ ] 実OrcaRouter疎通結果を記事へ反映
 - [x] 公開GitHub URLをQiita原稿へ反映
-- [ ] 応募要項の指定タグを記事へ反映
+- [x] AI HACK・OrcaRouter様への言及と公式リンクを記事へ反映
+- [ ] 投稿時のQiitaタグを確定
 - [ ] Qiita投稿・公開URL確認
 - [ ] 提出フォームに両URLを記入
 
