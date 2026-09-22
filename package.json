@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "pdf-lib": "^1.17.1",
+    "prettier": "^3.9.8",
     "vite": "^6.4.0"
   }
 }

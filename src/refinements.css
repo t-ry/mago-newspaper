@@ -1,2 +1,6 @@
-:root { font-family: Arial, 'Noto Sans JP', sans-serif; }
-[hidden] { display: none !important; }
+:root {
+  font-family: Arial, "Noto Sans JP", sans-serif;
+}
+[hidden] {
+  display: none !important;
+}

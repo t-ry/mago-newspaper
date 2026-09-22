@@ -21,7 +21,7 @@
 
 - [x] Qiita原稿: `docs/qiita-draft.md`
 - [x] READMEに導入・OrcaRouter・模擬郵送・制約を記載
-- [x] 公開リポジトリ作成・push、PUBLIC状態確認
+- [x] 公開リポジトリ作成・push、PUBLIC状態確認、未認証HTTP 200確認
 - [ ] 実OrcaRouter疎通結果を記事へ反映
 - [x] 公開GitHub URLをQiita原稿へ反映
 - [ ] 応募要項の指定タグを記事へ反映
