@@ -75,6 +75,7 @@ AWS CLIが未インストールなら、Linux x86_64では次の2コマンドで
 ```bash
 npm run setup:aws-cli
 npm run login:aws
+npm run status:aws
 ```
 
 現在のデータ保存先はApp Runnerのメモリなので、MVPではインスタンス数を1に制限しています。再起動時には作成中の新聞が消れるため、継続運用ではAmazon S3 / DynamoDBなどへの移行が必要です。AWSリソースと停止手順は[docs/aws-deployment.md](docs/aws-deployment.md)に記載しています。

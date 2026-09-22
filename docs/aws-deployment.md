@@ -23,6 +23,7 @@ AWS CLIがないLinux x86_64環境では、プロジェクト内へCLI v2をセ�
 ```bash
 npm run setup:aws-cli
 npm run login:aws
+npm run status:aws
 ```
 
 ```bash
